@@ -7,18 +7,14 @@ $conn = $db->getConnection();
 
 $gudang = new Gudang($conn);
 
-// Ambil ID dari query string
 $gudang->id = isset($_GET['id']) ? $_GET['id'] : die("ID tidak ditemukan.");
 
-// Mengambil data gudang berdasarkan ID
 $gudang->readSingle();
 
-// Pastikan data berhasil diambil
 if (!$gudang->name) {
     die("Data warehouse tidak ditemukan.");
 }
 
-// Proses pembaruan data jika form disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gudang->name = $_POST['name'];
     $gudang->location = $_POST['location'];
@@ -28,9 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gudang->closing_hour = $_POST['closing_hour'];
 
     if ($gudang->update()) {
-        // Redirect ke halaman utama setelah pembaruan berhasil
         header("Location: index.php");
-        exit(); // Pastikan tidak ada kode lain yang dieksekusi setelah ini
+        exit(); 
     } else {
         echo "<div class='alert alert-danger'>Gagal memperbarui data warehouse.</div>";
     }

@@ -15,7 +15,6 @@ class Gudang {
         $this->conn = $db;
     }
 
-    // Fungsi untuk menampilkan semua gudang
     public function read() {
         $query = "SELECT * FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);
@@ -23,13 +22,11 @@ class Gudang {
         return $stmt;
     }
 
-    // Fungsi untuk menambah gudang baru
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " SET name=:name, location=:location, capacity=:capacity, status=:status, opening_hour=:opening_hour, closing_hour=:closing_hour";
         
         $stmt = $this->conn->prepare($query);
 
-        // Binding data
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":location", $this->location);
         $stmt->bindParam(":capacity", $this->capacity);
@@ -37,14 +34,12 @@ class Gudang {
         $stmt->bindParam(":opening_hour", $this->opening_hour);
         $stmt->bindParam(":closing_hour", $this->closing_hour);
 
-        // Eksekusi query
         if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
-    // Fungsi untuk menampilkan data gudang berdasarkan ID
     public function readSingle() {
         $query = "SELECT * FROM " . $this->table_name . " WHERE id = ? LIMIT 0,1";
         
@@ -62,13 +57,11 @@ class Gudang {
         $this->closing_hour = $row['closing_hour'];
     }
 
-    // Fungsi untuk mengupdate data gudang
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET name=:name, location=:location, capacity=:capacity, status=:status, opening_hour=:opening_hour, closing_hour=:closing_hour WHERE id=:id";
         
         $stmt = $this->conn->prepare($query);
 
-        // Binding data
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":location", $this->location);
         $stmt->bindParam(":capacity", $this->capacity);
@@ -77,14 +70,12 @@ class Gudang {
         $stmt->bindParam(":closing_hour", $this->closing_hour);
         $stmt->bindParam(":id", $this->id);
 
-        // Eksekusi query
         if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
-    // Fungsi untuk menghapus atau menonaktifkan gudang
     public function delete() {
         $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
         
@@ -97,7 +88,6 @@ class Gudang {
         return false;
     }
 
-    // Fungsi untuk menampilkan gudang dengan pagination
     public function readWithPagination($limit, $offset) {
         $query = "SELECT * FROM " . $this->table_name . " LIMIT ? OFFSET ?";
         
@@ -108,7 +98,6 @@ class Gudang {
         return $stmt;
     }
 
-    // Fungsi untuk menghitung total data gudang
     public function count() {
         $query = "SELECT COUNT(*) as total_rows FROM " . $this->table_name;
         

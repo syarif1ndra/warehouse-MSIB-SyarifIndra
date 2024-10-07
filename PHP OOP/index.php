@@ -95,12 +95,10 @@
         $db = $database->getConnection();
         $gudang = new Gudang($db);
 
-        // Pagination settings
-        $limit = 5; // Limit of 5 records per page
+        $limit = 5; 
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $offset = ($page - 1) * $limit;
 
-        // Read data with pagination
         $stmt = $gudang->read($limit, $offset);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr>";
@@ -118,14 +116,12 @@
             echo "</tr>";
         }
 
-        // Count total rows for pagination
         $total_rows = $gudang->count();
         $total_pages = ceil($total_rows / $limit);
         ?>
 
     </table>
 
-    <!-- Pagination links -->
     <div class="pagination">
         <?php
         for ($i = 1; $i <= $total_pages; $i++) {
